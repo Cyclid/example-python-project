@@ -22,7 +22,8 @@
             {
                "action" : "command",
                "cmd" : "pip install -r requirements.txt",
-               "path" : "%{workspace}/example-python-project"
+               "path" : "%{workspace}/example-python-project",
+               "sudo" : "true"
             }
          ]
       },
@@ -80,14 +81,9 @@
       },
       {
          "stage" : "test",
-         "on_failure" : "failure"
-      },
-      {
-        "stage": "failure",
-        "only_if": "%{cobertura_line_rate} < 90%"
-      },
-      {
-        "stage": "success"
+         "fail_if": "%{cobertura_line_rate} < 90%",
+         "on_failure" : "failure",
+         "on_success": "success"
       }
    ]
 }
